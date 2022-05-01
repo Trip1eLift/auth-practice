@@ -7,4 +7,5 @@ Tutorial:
 3. https://www.youtube.com/watch?v=mbsmsi7l3r4
 
 Frontend: ReactJS, uses locatStorage to store session token
+
 Backend: ExpressJS, uses JWT to generate and verify session token

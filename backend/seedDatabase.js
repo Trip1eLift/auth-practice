@@ -1,4 +1,6 @@
-import sqlite3 from "sqlite3";
+import 'dotenv/config';
+import sqlite3 from 'sqlite3';
+import bcrypt from 'bcrypt';
 
 export default async function seedDatabase() {
     const promise = new Promise((resolve, reject) => {
@@ -9,7 +11,10 @@ export default async function seedDatabase() {
                 try {
                     await dropUsers(db);
                     await createUsers(db);
-                    await insertUsers(db, "master", "Master Account", "hardpassword");
+                    const pwH = await hashPassword("hardpassword");
+                    //comparePassword("hardpassword", pwH);
+                    console.log("password: hardpassword");
+                    await insertUsers(db, "master", "Master Account", pwH);
                     await showUsers(db);
                     resolve(true);
                 } catch (err) {
@@ -23,6 +28,22 @@ export default async function seedDatabase() {
 }
 
 //seedDatabase();
+
+async function hashPassword(password) {
+    const promise = new Promise((resolve, reject) => {
+        bcrypt.hash(password + process.env.SECRET_KEY, Number(process.env.SALT_ROUNDS), (err, hash) => {
+            if (err)
+                reject(err);
+            else
+                resolve(hash);
+        });
+    });
+    return promise;
+}
+
+function comparePassword(password, hash) {
+    bcrypt.compare(password + process.env.SECRET_KEY, hash, (err, result) => console.log(result));
+}
 
 async function dropUsers(db) {
     const promise = new Promise((resolve, reject) => {

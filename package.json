@@ -5,7 +5,7 @@
     "scripts": {
         "initiate": "npm install && cd ./frontend && npm install && cd ../backend && npm install",
         "start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
-        "frontend": "cd ./frontend && npm run dev",
+        "frontend": "cd ./frontend && npm start",
         "backend": "cd ./backend && npm start"
     },
     "author": "Trip1eLift",

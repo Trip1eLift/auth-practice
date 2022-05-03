@@ -1,0 +1,1 @@
+.env is not hiden intentionally because this is a PoC project.
